@@ -1,4 +1,4 @@
-#Basic code to control the break beam - Just need to test on Pi
+bas
 import RPi.GPIO as GPIO
 import time
 
