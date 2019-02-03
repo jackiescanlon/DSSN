@@ -2,7 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 
-GPIO.setwarnings(False) #if RPi.GPIO detects
+GPIO.setwarnings(False) #if RPi.GPIO detects changes to the pin is throws a flag
 GPIO.setmode(GPIO.BOARD)
 
 #Read output pin of PIR sensor
