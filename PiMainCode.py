@@ -14,6 +14,21 @@ from picamera import PiCamera
 # Imports for sending the text message
 import smtplib
 
+def send_mail(): #the texting portion
+    print "Sending text"
+    server = smtplib.SMTP('smtp.gmail.com:587')
+    server.starttls()
+    server.login(GMAIL_USER,PASS)
+    header = 'To: ' + TO + '\n' + 'From: ' + GMAIL_USER
+    header = header + '\n' + 'Subject: ' + SUBJECT + '\n'
+    print header
+    msg = header + '\n' + TEXT + '\n\n'
+    server.sendmail(GMAIL_USER,TO,msg)
+    server.quit()
+    time.sleep(1)
+    print "Text sent"
+    
+    
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -34,6 +49,9 @@ TO='6316556084@vtext.com'
 GMAIL_USER='dssn2019@gmail.com'
 PASS='ricky250'
 
+SUBJECT = 'Alert!'
+TEXT = 'Your Raspberry Pi detected an intruder!'
+    
 # Continue listening for connections
 while True:
     # Wait for a connection
@@ -61,6 +79,8 @@ while True:
                 # Take the picture
                 camera.capture('/home/pi/Documents/DSSN/Pictures/' + date_string + '.jpg')
                 print('Done taking picture')
+                
+                send_mail()
             else:
                 print('No data from', client_address)
                 break
