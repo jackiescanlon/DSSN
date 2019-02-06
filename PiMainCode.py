@@ -16,7 +16,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Set the IP address and port. 
 # This is the IP address of the Pi
-server_address = ('192.168.1.198', 10001)
+server_address = ('192.168.1.73', 10001)
 print('starting up on {} port {}'.format(*server_address))
 sock.bind(server_address)
 

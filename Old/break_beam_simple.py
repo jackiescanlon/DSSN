@@ -10,10 +10,10 @@ GPIO.setup(5,GPIO.IN, pull_up_down=GPIO.PUD_UP) # IR Detector - add in a 10k pul
 try:
     sensorState = 1
     while True:
-        GPIO.output(5, GPIO.HIGH)
-        sensorState = GPIO.input(7)
+        GPIO.output(11, GPIO.HIGH)
+        sensorState = GPIO.input(5)
         if(sensorState == GPIO.LOW):
-            print("Beam broken - Instuder alert")
+            print("Beam broken - Intruder alert")
 	else:
 	    print("everything is safe")
 	time.sleep(1)

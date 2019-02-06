@@ -15,7 +15,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect the socket to the port where the server is listening
 # Should have IP address of the Raspberry Pi (NOT the Zero)
-server_address = ('192.168.1.198', 10001)
+server_address = ('192.168.1.73', 10001)
 print('Connecting to {} port {}'.format(*server_address))
 sock.connect(server_address)
 
@@ -23,12 +23,12 @@ sock.connect(server_address)
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 
-PIRPin = 13 
-TripPin = 7
-
+PIRPin = 7
+TripPin = 5
+TripPinLED = 11
 GPIO.setup(PIRPin, GPIO.IN)
 GPIO.setup(TripPin,GPIO.IN, pull_up_down=GPIO.PUD_UP) 
-
+GPIO.setup(TripPinLED, GPIO.OUT)
 
 def sendMessage(pin):
 
@@ -38,29 +38,22 @@ def sendMessage(pin):
         # Send data
         message = 'Take a picture!'
         sock.sendall(message)
-
-        '''# Look for the response, which is "Pos" or "Neg"
-        amount_received = 0
-        amount_expected = 3
-
-        while amount_received < amount_expected:
-            data = sock.recv(1024)
-            amount_received += len(data)
-            print('Received {!r}'.format(data))'''
-
-    finally:
-        print('Closing socket')
-        sock.close()
+    except:
+	print('Was not able to send messsage to Raspberry Pi')
 
 print("Motion Sensor Alarm (CTRL+C to exit)")
-time.sleep(2)
+time.sleep(1)
 print("Ready")
 
 try:
     GPIO.add_event_detect(PIRPin, GPIO.RISING, callback=sendMessage)
-    GPIO.add_event_detect(TripPin, GPIO.FALLING, callback=sendMessage)
     while(True):
-        time.sleep(1)
-except KeyboardInterrupt:
-    print("Quit")
+        GPIO.output(TripPinLED, GPIO.HIGH)
+        if(GPIO.input(TripPin) == GPIO.LOW):
+	    sendMessage(TripPin)
+
+        time.sleep(2)
+finally:
+    print('Closing socket')
+    sock.close()
     GPIO.cleanup()

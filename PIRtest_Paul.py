@@ -4,7 +4,7 @@ import time
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD) # formerly GPIO.BCM -> doesnt work
 
-PIRpin = 13 #GPIO 18
+PIRpin = 7 #GPIO 18
 
 GPIO.setup(PIRpin, GPIO.IN)
 
