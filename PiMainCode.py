@@ -13,6 +13,7 @@ from picamera import PiCamera
 
 # Imports for sending the text message
 import smtplib
+import time
 
 def send_mail(): #the texting portion
     print "Sending text"
