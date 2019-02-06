@@ -9,7 +9,8 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup (3,GPIO.IN) #Basic structure GPIO.setup (channel, GPIO.IN/OUT, initial=GPIO.HIGH/LOW)
 
 try:
-  time.sleep(60) #Allows sensor to stabilize (takes about a minute)
+  print('I am sleeping. Give me a moment')
+  time.sleep(0) #Allows sensor to stabilize (takes about a minute)
   while True:
       detection = GPIO.input(3) #read the value of a GPIO pi
       if detection==1:                 #When output from motion sensor is LOW

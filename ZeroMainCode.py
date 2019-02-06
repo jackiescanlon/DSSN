@@ -30,7 +30,7 @@ GPIO.setup(PIRPin, GPIO.IN)
 GPIO.setup(TripPin,GPIO.IN, pull_up_down=GPIO.PUD_UP) 
 
 
-def sendMessage(PIRpin):
+def sendMessage(pin):
 
     try:
         print('Motion detected. Sending message to Raspberry Pi')
@@ -46,7 +46,7 @@ def sendMessage(PIRpin):
         while amount_received < amount_expected:
             data = sock.recv(1024)
             amount_received += len(data)
-            print('Received {!r}'.format(data))''''
+            print('Received {!r}'.format(data))'''
 
     finally:
         print('Closing socket')
@@ -57,10 +57,10 @@ time.sleep(2)
 print("Ready")
 
 try:
-    GPIO.add_event_detect(PIRpin, GPIO.RISING, callback=sendMessage)
+    GPIO.add_event_detect(PIRPin, GPIO.RISING, callback=sendMessage)
     GPIO.add_event_detect(TripPin, GPIO.FALLING, callback=sendMessage)
     while(True):
-        sleep(1)
+        time.sleep(1)
 except KeyboardInterrupt:
     print("Quit")
     GPIO.cleanup()
