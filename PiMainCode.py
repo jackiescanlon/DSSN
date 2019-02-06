@@ -11,6 +11,9 @@ import datetime
 from time import sleep
 from picamera import PiCamera
 
+# Imports for sending the text message
+import smtplib
+
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -25,6 +28,11 @@ sock.listen(1)
 
 # Create the camera object
 camera = PiCamera()
+
+# Constants for SMS text
+TO='6316556084@vtext.com'
+GMAIL_USER='dssn2019@gmail.com'
+PASS='ricky250'
 
 # Continue listening for connections
 while True:

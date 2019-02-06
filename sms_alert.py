@@ -2,12 +2,12 @@ import time
 import smtplib
 import RPi.GPIO as GPIO
 
-TO= 6316556084@vtext.com
-GMAIL_USER=jbor34@gmail.com
-PASS= 'M@lfegor1'
+TO= '6316556084@vtext.com'
+GMAIL_USER='dssn2019@gmail.com'
+PASS= 'ricky250'
 
 SUBJECT = 'Alert!'
-TEXT = 'Your Raspberry Pi detected an intruder!'
+TEXT = 'Your Raspberry Pi detected an intruder! Third time'
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(13,GPIO.IN)
@@ -26,9 +26,4 @@ def send_mail(): #the texting portion
     time.sleep(1)
     print "Text sent"
 
-while True:
-    if GPIO.input(13)==1: #trigger if sensor has detected something
-        send_mail()
-        time.sleep(120) #Sleep for 2 minutes
-    else:
-        time.sleep(5) #check every 5 seconds
+send_mail()
