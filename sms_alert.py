@@ -7,7 +7,7 @@ GMAIL_USER='dssn2019@gmail.com'
 PASS= 'ricky250'
 
 SUBJECT = 'Alert!'
-TEXT = 'Your Raspberry Pi detected an intruder! Third time'
+TEXT = 'Your Raspberry Pi detected an intruder!'
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(13,GPIO.IN)
