@@ -38,8 +38,8 @@ def sendMessage(pin):
         # Send data
         message = 'Take a picture!'
         sock.sendall(message)
-    except:
-	print('Was not able to send messsage to Raspberry Pi')
+    finally:
+	print('Sent message to Raspberry Pi')
 
 print("Motion Sensor Alarm (CTRL+C to exit)")
 time.sleep(1)
