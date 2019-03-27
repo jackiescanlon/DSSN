@@ -17,22 +17,30 @@ kit = ServoKit(channels=16)
 
 # Set ranges
 kit.servo[0].actuation_range = 180 # Default
-kit.servo[1].actuation_range = 150
+kit.servo[1].actuation_range = 360 #150
 
 counter = 0
 
 while True:
 
     # Pan left on even counts and right on odd counts
-    if counter%2 == 0:
+    if counter%4 == 0:
         # Pan left
         print('Panning left')
         kit.servo[0].angle = 0
-    else:
+    elif counter%4 == 1:
         # Pan right
         print('Panning right')
         kit.servo[0].angle = 180
-        
+    elif counter%4 == 2:
+	# Pan down
+        print('Panning up')
+        kit.servo[1].angle = 0
+    else:
+        # Pan up
+        print('Panning down')
+        kit.servo[1].angle = 360
+
     counter = counter + 1
     
     # Get the camera ready
@@ -46,5 +54,5 @@ while True:
     date_string = date.strftime("%m_%d_%Y_%H_%M_%S")
     
     # Take the picture
-    camera.capture('/home/pi/Documents/DSSN/Project/Pictures/' + date_string + '.jpg')
+    #camera.capture('/home/pi/Documents/DSSN/Project/Pictures/' + date_string + '.jpg')
     print('Done taking picture')
