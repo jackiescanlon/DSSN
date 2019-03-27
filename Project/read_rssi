@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "testing rssi /n"> logs1
+while (true)
+do
+hcitool rssi FC:58:FA:8E:12:78>> logs1
+date +%S
+date +%S>> logs1
+sleep 1
+done

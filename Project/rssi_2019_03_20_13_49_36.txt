@@ -1,0 +1,9 @@
+MAC Address: 10:4A:7D:9D:E7:EC
+Measurements taken on Wednesday March 20, 2019 at 13:49:36
+Distances measured in cm and RSSI measured in dB.
+RSSI will be measured at each distance 5 times to get an average.
+
+Distance    RSSI
+10          -42.4
+10          -38.6
+20          -42.75
