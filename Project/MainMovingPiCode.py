@@ -15,21 +15,23 @@ import socket
 #import sys
 
 
-def getPower(rssi)
+def getPower(rssi):
     # Calculate power for each anchor
 
     power = np.exp(rssi/10)
+    
+    for i in range(0,3):
+	if(power[i] <= .0031):
+	   power[i] = .0031
+
     return power
 
 
-def getRSSI(anchors)
+def getRSSI(anchors):
     # Extract RSSI values for each anchor and average them
 
     # Set MAC addresses for each of the bluetooth anchors
-    address = np.zeros(shape=(anchors,1))
-    address[0] = 
-    address[1] = 
-    address[2] = 
+    address = ['70:1C:E7:38:FC:E2', '10:4A:7D:9D:E7:EC', '5C:E0:C5:96:89:57']
 
     # Will keep a running total of each of the rssi values, so that we can 
     # average later
@@ -71,12 +73,15 @@ def getRSSI(anchors)
         # Otherwise, get an average
         else:
             rssi[j] = total[j]/count[j]
+
+    print('RSSI: ')
+    print(rssi)
         
     # Return the rssi values
     return rssi
 
 
-def ParseOutput(words, address):   
+def ParseOutput(words, address):
     # Convert string of text into substrings of RSSI values
 
     try: 
@@ -87,14 +92,16 @@ def ParseOutput(words, address):
     return rssi
 
 
-def getDistance(power)
+def getDistance(power):
     # Converts power value into a distance measurement
 
-    distance = 13 + np.sqrt(.03/(power-.003))
+    distance = 13 + np.sqrt(.3/(power-.003))
+    print('distance')
+    print(distance)
     return distance
     
 
-def getXAndY(anchors, distance, location)
+def getXAndY(anchors, distance, location):
     # use trilateration to get x,y coordinates
 
     # Get b
@@ -102,19 +109,24 @@ def getXAndY(anchors, distance, location)
 
     for j in range(0, anchors):
         b[j] = math.pow(distance[j],2) - math.pow(location[j,0], 2) - math.pow(location[j,1],2)
-    
+ 
+    print('b')
+    print(b)   
     # Get A
-    A = np.ones(shape=(anchors, 3))
-    A[,1:2] = locations
-
+    #A = np.ones(shape=(anchors, 3))
+    A = np.matrix([[1.,0,0],[1,-100,0],[1,0,-100]])
+    print('A')
+    print(A)
     # Perform pseudoinverse to get x and y locations (Az = b)
     z = np.linalg.inv(A.T*A)*A.T*b
 
+    print('z-location')
+    print(z)
     # Send back
-    return z[0], z[1]
+    return z[1], z[2]
 
 
-def sendToCamera(x,y)
+def sendToCamera(x,y):
     # Send the x and y location to the camera
 
     try:
@@ -131,13 +143,13 @@ if __name__ == "__main__":
     anchors = 3
 
     # Set anchor locations
-    location = zeros(shape(anchors, 2))
-    location[0,] = [,]
-    location[1,] = [,]
-    location[2,] = [,]
+    location = np.zeros(shape=(anchors, 2))
+    location[0,] = [0,0]
+    location[1,] = [50,0]
+    location[2,] = [0,50]
 
     # Set the IP address of the camera 
-    camera_ip = ''
+    camera_ip = '192.168.0.18'
 
     #---------------------------------
 
@@ -164,7 +176,7 @@ if __name__ == "__main__":
             distance = getDistance(power)
 
             # Use trilateration to get x,y coordinates
-            x, y = getXAndY(distance, location)
+            x, y = getXAndY(anchors, distance, location)
 
             # Send x,y coordinate to camera
             sendToCamera(x,y)
@@ -173,6 +185,6 @@ if __name__ == "__main__":
         else:
             print('Cannot find anchors. Trying again.')
                 
-    except KeyboardInterrupt:
-        print('\n\nProgram Done.')
+    #except(KeyboardInterrupt):
+    #    print('\n\nProgram Done.')
 
