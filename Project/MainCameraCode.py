@@ -18,18 +18,18 @@ from time import sleep
 from picamera import PiCamera
 
 
-def panCamera(x,y, xc, yc, beta, kit)
+def panCamera(x,y, xc, yc, beta, kit):
 	# Calculates the angle the camera needs to pan to and pans there.
 
 	# Calculate angle
-	phi = numpy.arctan((x-xc)/(y-yc))
+	phi = np.arctan((x-xc)/(y-yc))
 	theta = phi + beta
 
 	# Pan to that angle
 	kit.servo[0].angle = theta
 	
 
-def takePicture()
+def takePicture():
 	# Takes the picture and saves it.
 
 	# Get the camera ready
@@ -52,16 +52,16 @@ if __name__ == "__main__":
 	# ------Parameters to be set-----
 
 	# Set the location of the camera
-	xc = 
-	yc = 
+	xc = 50
+	yc = 50
 
 	# Set the IP address of the camera
-	camera_ip = ''
+	camera_ip = '192.168.0.18'
 
 	# Set the angle of adjustment for camera
 	# aka, how many degrees off the vertical
 	# is the camera tilted
-	beta = 45
+	beta = 75
 
 	# -------------------------------
 
@@ -71,7 +71,7 @@ if __name__ == "__main__":
 	kit.servo[0].actuation_range = 180 # Default
 
 	# Connect to moving Raspberry Pi
-	sock = socet.socket(socket.AF_INET, socket.SOCK_STREAM)
+	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	camera_address = (camera_ip, 10001)
 	sock.bind(camera_address)
 	sock.listen(1)
@@ -89,12 +89,12 @@ if __name__ == "__main__":
 
 			# Receive the message
 			while True:
-				data = connecton.recv(1024)
+				data = connection.recv(1024)
 
 				if data:
-					xy = data.split(',')
-					x = xy[0]
-					y = xy[1]
+					xy = str(data).split(',')
+					x = float(xy[0])
+					y = float(xy[1])
 
 					# Pan to the correct angle
 					panCamera(x,y,xc,yc,beta,kit)

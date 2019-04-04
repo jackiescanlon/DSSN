@@ -24,22 +24,22 @@ counter = 0
 while True:
 
     # Pan left on even counts and right on odd counts
-    if counter%4 == 0:
+    if counter%2 == 0:
         # Pan left
         print('Panning left')
-        kit.servo[0].angle = 0
-    elif counter%4 == 1:
+        kit.servo[0].angle =75
+    #elif counter%2 == 1:
         # Pan right
-        print('Panning right')
-        kit.servo[0].angle = 180
-    elif counter%4 == 2:
+       # print('Panning right')
+        #kit.servo[0].angle = 100
+    #elif counter%2 == 2:
 	# Pan down
-        print('Panning up')
-        kit.servo[1].angle = 0
-    else:
+        #print('Panning up')
+        #kit.servo[1].angle = 0
+    #else:
         # Pan up
-        print('Panning down')
-        kit.servo[1].angle = 360
+        #print('Panning down')
+        #kit.servo[1].angle = 360
 
     counter = counter + 1
     
