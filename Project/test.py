@@ -1,4 +1,3 @@
-from adafruit_servokit import ServoKit
-
-kit = ServoKit(channels=16)
-kit.servo[0].angle=50
+print('Enter beta (0-180)')
+while True:
+	beta = input()
