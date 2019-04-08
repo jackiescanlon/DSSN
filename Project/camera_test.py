@@ -10,8 +10,8 @@ import socket
 
 # For panning
 import numpy as np
-from adafruit_servokit import ServoKit
 import math
+from adafruit_servokit import ServoKit
 
 # For taking the picture
 import datetime
@@ -25,8 +25,7 @@ def panCamera(x,y, xc, yc, beta, kit):
 	# Calculate angle
 	phi = np.arctan((x-xc)/(y-yc))*180/math.pi
 	theta = phi + beta
-	print('x: ' + str(x) + '  y:' + str(y))
-	print('Theta :' + str(theta))
+	print(theta)
 	# Pan to that angle
 	kit.servo[0].angle = theta
 	
@@ -73,41 +72,24 @@ if __name__ == "__main__":
 	kit.servo[0].actuation_range = 180 # Default
 
 	# Connect to moving Raspberry Pi
-	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	camera_address = (camera_ip, 10003)
-	sock.bind(camera_address)
-	sock.listen(1)
+	#sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	#camera_address = (camera_ip, 10003)
+	#sock.bind(camera_address)
+	#sock.listen(1)
 
 	# Continue listening for connections
 	while True:
 
 		# Wait for a connection
-		print('Not Connected')
-		connection, client_address = sock.accept()
+		#print('Not Connected')
+		#connection, client_address = sock.accept()
 
 		# Receive connection
-		try:
-			print('Connected')
 
-			# Receive the message
-			while True:
-				data = connection.recv(1024)
-
-				if data:
-					xy = str(data.decode()).split(',')
-					x = float(xy[0])
-					y = float(xy[1])
-
-					# Pan to the correct angle
-					panCamera(x,y,xc,yc,beta,kit)
-
-					# Take the picture
-					takePicture(camera) 
-
-				else:
-					print('No data received')
-					break
-
-		finally:
-			# Clean up the connection
-			connection.close()
+		#data = connection.recv(1024)
+		print('x')
+		x = float(input())
+		print('y')
+		y = float(input())
+		panCamera(x,y,xc,yc,beta,kit)
+		#takePicture(camera)
