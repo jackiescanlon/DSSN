@@ -26,7 +26,8 @@ def panCamera(x,y, xc, yc, beta, kit):
 	phi = np.arctan((x-xc)/(y-yc))*180/math.pi
 	theta = phi + beta
 	print('x: ' + str(x) + '  y:' + str(y))
-	print('Theta :' + str(theta))
+	print('Panning to angle theta: ' + str(theta))
+
 	# Pan to that angle
 	kit.servo[0].angle = theta
 	
@@ -35,7 +36,7 @@ def takePicture(camera):
 	# Takes the picture and saves it.
 
 	# Get the camera ready
-    camera.start_preview()
+    camera.start_preview(fullscreen=False,window=(100,200,300,400))
     
     # Camera warm up time
     sleep(2) 
@@ -46,7 +47,7 @@ def takePicture(camera):
     
     # Take the picture
     camera.capture('/home/pi/Documents/DSSN/Project/Pictures/' + date_string + '.jpg')
-    print('Picture taken')
+    print('Picture taken as ' + date_string + '.jpg')
 
 
 if __name__ == "__main__":
@@ -71,6 +72,9 @@ if __name__ == "__main__":
 	camera = PiCamera()
 	kit = ServoKit(channels=16)
 	kit.servo[0].actuation_range = 180 # Default
+
+	# Move the camera to 0
+	kit.servo[0].angle = 0
 
 	# Connect to moving Raspberry Pi
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -98,6 +102,8 @@ if __name__ == "__main__":
 					x = float(xy[0])
 					y = float(xy[1])
 
+					print('Received x,y data as: ' + str(x) + ', ' + str(y))
+					
 					# Pan to the correct angle
 					panCamera(x,y,xc,yc,beta,kit)
 
