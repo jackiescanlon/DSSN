@@ -110,6 +110,9 @@ if __name__ == "__main__":
 					# Take the picture
 					takePicture(camera) 
 
+					# Move the camera to 0
+					kit.servo[0].angle = 0
+
 				else:
 					print('No data received')
 					break
