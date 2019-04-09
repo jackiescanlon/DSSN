@@ -1,5 +1,5 @@
 ''' 
-MainMovingPiCode.py
+SensorNode.py
 This code reads in bluetooth data and converts it to 
 its current x, y position via RSSI signals and trilateration.
 April 1st, 2019 - Jackie Scanlon

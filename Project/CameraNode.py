@@ -1,5 +1,5 @@
 ''' 
-MainCameraCode.py
+CameraNode.py
 This code reads in an x,y location from the moving Raspberry Pi
 and pans the camera to take a picture of it.
 April 1st, 2019 - Jackie Scanlon
