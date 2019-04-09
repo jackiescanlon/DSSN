@@ -3,7 +3,7 @@ import math
 
 import socket
 
-camera_ip = '129.161.139.98'
+camera_ip = '129.161.221.4'
 
 # Connect to moving Raspberry Pi
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

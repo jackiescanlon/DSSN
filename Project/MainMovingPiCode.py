@@ -10,6 +10,7 @@ import os
 import numpy as np
 import math
 import sys
+import datetime
 
 # For talking to the camera
 import socket
@@ -17,6 +18,7 @@ import socket
 # Debugging
 import time
 import random
+
 
 def getPower(rssi):
     # Calculate power for each anchor
@@ -132,6 +134,19 @@ def sendToCamera(x,y):
     finally:
         pass
 
+def saveToFile(filepath, rssi, count_original,true_x, true_y, x,y):
+    # Save the information to a csv file
+
+    date = datetime.datetime.now()
+    s = '\n' + date.strftime('%A %B %d %Y at %H:%M:%S') + ', '
+    s = s + str(rssi[0,0]) + ', ' + str(rssi[1,0]) + ', ' + str(rssi[2,0]) + ', '
+    s = s + str(count_original) + ', '
+    s = s + str(true_x) + ', ' + str(true_y) + ', '
+    s = s + str(x) + ', ' + str(y)
+
+    with open(filepath, 'a') as file:
+        file.write(s)
+
 
 if __name__ == "__main__":
 
@@ -152,13 +167,21 @@ if __name__ == "__main__":
 
     # Set the IP address of the camera 
     camera_ip = '192.168.0.18'
-    #camera_ip = '129.161.139.98'
+    #camera_ip = '129.161.221.4'
 
     # How many times do we want to take a measurement
     count_original = 25
 
     #---------------------------------
 
+    # Save information to a file
+    date = datetime.datetime.now()
+    datestr = date.strftime('%Y_%m_%d_%H_%M_%S')
+    filepath = 'experiment_' + datestr + '.csv'
+
+    with open(filepath, 'a') as file:
+        file.write('DSSN Project Experiment on ' + date.strftime('%A %B %d, %Y at %H:%M:%S'))
+        file.write('\n\nTime, RSSI #1, RSSI #2, RSSI #3, Measurements, True X, True Y, X, Y')
     # Set up wifi communication with the camera
 
     #Create a TCP/IP socket
@@ -170,8 +193,16 @@ if __name__ == "__main__":
 
     while(True):
 
+        # Get the actual locations
+        print('Enter the true x-location of the sensor node: ')
+        true_x = input()
+        print('\nEnter the true y-location of the sensor node: ')
+        true_y = input()
+
         # Read in RSSIs
         rssi = getRSSI(anchors, address, count_original)
+        #rssi = np.array([[-54],[-42], [-45]])
+        #time.sleep(5)
 
         print('\nRSSIs: \n' + str(rssi))
 
@@ -191,6 +222,9 @@ if __name__ == "__main__":
 
             # Send x,y coordinate to camera
             sendToCamera(x,y)
+
+            # Save to file
+            saveToFile(filepath, rssi, count_original,true_x, true_y, x,y)
 
         # If we weren't able to get readings to all anchors
         else:
