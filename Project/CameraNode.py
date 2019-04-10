@@ -59,12 +59,12 @@ if __name__ == "__main__":
 	yc = 50
 
 	# Set the IP address of the camera
-	camera_ip = '192.168.0.14'
+	camera_ip = '192.168.0.21'
 
 	# Set the angle of adjustment for camera
 	# aka, how many degrees off the vertical
 	# is the camera tilted
-	beta = 85
+	beta = 75
 
 	# -------------------------------
 
@@ -78,7 +78,7 @@ if __name__ == "__main__":
 
 	# Connect to moving Raspberry Pi
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	camera_address = (camera_ip, 10003)
+	camera_address = (camera_ip, 10001)
 	sock.bind(camera_address)
 	sock.listen(1)
 
