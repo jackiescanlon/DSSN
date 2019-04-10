@@ -166,7 +166,7 @@ if __name__ == "__main__":
     location[2,] = [0,50]
 
     # Set the IP address of the camera 
-    camera_ip = '192.168.0.18'
+    camera_ip = '192.168.0.21'
     #camera_ip = '129.161.221.4'
 
     # How many times do we want to take a measurement
